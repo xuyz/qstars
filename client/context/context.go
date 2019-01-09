@@ -5,17 +5,13 @@ import (
 	"github.com/QOSGroup/qbase/store"
 	"github.com/pkg/errors"
 	"io"
-	"strings"
 
 	"github.com/QOSGroup/qstars/client"
 	"github.com/QOSGroup/qstars/wire"
 
 	"github.com/spf13/viper"
 
-	rpcclient "github.com/tendermint/tendermint/rpc/client"
 	tmlite "github.com/tendermint/tendermint/lite"
-
-
 
 	abci "github.com/tendermint/tendermint/abci/types"
 	"github.com/tendermint/tendermint/crypto/merkle"
@@ -44,7 +40,7 @@ type CLIContext struct {
 	Async           bool
 	JSON            bool
 	PrintResponse   bool
-	Verifier      tmlite.Verifier
+	Verifier        tmlite.Verifier
 }
 
 // NewCLIContext returns a new initialized CLIContext with parameters from the
@@ -161,7 +157,6 @@ func (ctx CLIContext) verifyProof(queryPath string, resp abci.ResponseQuery) err
 	return nil
 }
 
-
 // Verify verifies the consensus proof at given height.
 func (ctx CLIContext) Verify(height int64) (tmtypes.SignedHeader, error) {
 	check, err := tmliteProxy.GetCertifiedCommit(height, ctx.Client, ctx.Verifier)
@@ -174,4 +169,3 @@ func (ctx CLIContext) Verify(height int64) (tmtypes.SignedHeader, error) {
 
 	return check, nil
 }
-
